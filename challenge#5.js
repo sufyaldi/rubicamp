@@ -8,5 +8,6 @@ function stringManipulation(word) {
       console.log(word.slice(1) + hrfPrtm + 'nyo'); 
     }
   }
+  
 stringManipulation('ayam');
 stringManipulation('bebek')
