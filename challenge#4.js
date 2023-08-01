@@ -1,30 +1,33 @@
-function indexPrime(param1) {
-  function bilPrm(num) { 
-    if (num <= 1) {
-      return false; 
-    }
+function indexPrime(param1) { 
+  function bilPrima(num) {
+    if (num <= 1) return false; 
+    if (num <= 3) return true;
 
-    for (let i = 2; i <= Math.sqrt(num); i++) { 
-      if (num % i === 0) { 
-        return false; 
-      }
-    }
+    if (num % 2 === 0 || num % 3 === 0) return false; 
 
+    let i = 5;
+    while (i * i <= num) { 
+      if (num % i === 0 || num % (i + 2) === 0) return false; 
+      i += 6;
+    }
     return true; 
   }
 
-  let count = 0; 
-  let number = 2; 
+  let primeCount = 0;
+  let num = 2;
+  let result;
 
-  while (count < param1) { 
-    if (bilPrm(number)) { 
-      count++; 
+  while (primeCount < param1) {
+    if (bilPrima(num)) {
+      result = num;
+      primeCount++;
     }
-    number++;
+    num++;
   }
 
-  return number - 1; 
+  return result;
 }
-console.log(indexPrime(4))
-console.log(indexPrime(500))
-console.log(indexPrime(37786))
+
+console.log(indexPrime(4));   
+console.log(indexPrime(500));  
+console.log(indexPrime(37786));
