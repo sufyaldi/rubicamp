@@ -5,7 +5,7 @@ function stringManipulation(word) {
     if (hrfVkl.includes(hrfPrtm)) {
       console.log(word); 
     } else {
-      console.log(word.slice(1) + hrfPrtm + 'nyo'); 
+      console.log(word.slice(1) + word[0] + 'nyo'); 
     }
   }
 
