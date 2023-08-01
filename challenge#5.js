@@ -1,11 +1,11 @@
 function stringManipulation(word) {
-    const vowels = ['a', 'e', 'i', 'o', 'u'];
-    const firstLetter = word[0].toLowerCase();
+    const hrfVkl = ['a', 'e', 'i', 'o', 'u'];
+    const hrfPrtm = word[0].toLowerCase();
   
-    if (vowels.includes(firstLetter)) {
+    if (hrfVkl.includes(hrfPertama)) {
       console.log(word); 
     } else {
-      console.log(word.slice(1) + firstLetter + 'nyo'); 
+      console.log(word.slice(1) + hrfPrtm + 'nyo'); 
     }
   }
 stringManipulation('ayam');
