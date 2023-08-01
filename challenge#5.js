@@ -3,9 +3,9 @@ function stringManipulation(word) {
     const firstLetter = word[0].toLowerCase();
   
     if (vowels.includes(firstLetter)) {
-      console.log(word); // Jika huruf pertama adalah vokal, cetak string apa adanya
+      console.log(word); 
     } else {
-      console.log(word.slice(1) + firstLetter + 'nyo'); // Jika huruf pertama adalah konsonan, manipulasi dan cetak hasilnya
+      console.log(word.slice(1) + firstLetter + 'nyo'); 
     }
   }
 stringManipulation('ayam');
