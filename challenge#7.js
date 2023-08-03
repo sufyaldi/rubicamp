@@ -1,16 +1,18 @@
 function weirdMultiply(sentence){
-    if (sentence < 10){
+    if (sentence <= 9) {
         return sentence;
-    }
-    let result = 1;
-    while(sentence > 0){
-        const digit = sentence % 10;
+      }
+    
+      var angkaString = sentence.toString();
+      var result = 1;
+    
+      for (let i = 0; i < angkaString.length; i++) {
+        let digit = parseInt(angkaString[i]);
         result *= digit;
-        sentence = Math.floor(sentence /10);
+      }
+          return weirdMultiply(result);
     }
-    return weirdMultiply(result);
-}
-
-console.log (weirdMultiply(39));
-console.log (weirdMultiply(999));
-console.log (weirdMultiply(3));
+    
+    console.log (weirdMultiply(39));
+    console.log (weirdMultiply(999));
+    console.log (weirdMultiply(3));
