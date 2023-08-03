@@ -17,4 +17,4 @@ function sentenceManipulation(sentence) {
   console.log(hasil.join(' '));
 }
 
-sentenceManipulation('ibu pergi ke pasar bersamas aku');
+sentenceManipulation('ibu pergi ke pasar bersama aku');
