@@ -1,6 +1,6 @@
 function sentenceManipulation(sentence) {
   const vokal = ['a', 'e','i','o','u'];
-  const kata = sentence.toLowerCase().split(' '); 
+  const kata = sentence.split(' '); 
   const hasil = [];
 
   for (let i = 0; i < kata.length; i++) {
@@ -11,7 +11,7 @@ function sentenceManipulation(sentence) {
       hasil.push(k);      
     } else {
       const kataBaru = k.substring(1) + hurufPertama + 'nyo';      
-      hasil.push(kataBaru.toLowerCase()); 
+      hasil.push(kataBaru); 
     }
   }
   console.log(hasil.join(' '));
