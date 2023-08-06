@@ -1,4 +1,3 @@
-
 function sum() {
   let total = 0;
   for (let if=0; i < arguments.length; i++) {
