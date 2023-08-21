@@ -85,7 +85,7 @@ INSERT INTO khs(nim, mk_id, nidn, sks) VALUES
 ("00005", "002","0002", 2),
 ("00005", "003","0003", 3);
 
-UPDATE khs set nilai="E" WHERE khs_id=001;
+UPDATE khs set nilai="E" WHERE khs_id=1;
 UPDATE khs set nilai="B+" WHERE khs_id=2;
 UPDATE khs set nilai="C" WHERE khs_id=3;
 UPDATE khs set nilai="C" WHERE khs_id=4;
