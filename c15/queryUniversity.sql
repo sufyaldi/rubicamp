@@ -5,11 +5,15 @@ JOIN jurusan ON mahasiswa.jurusan_id = jurusan.jurusan_id;
 ALTER TABLE mahasiswa
 ADD tanggal_lahir DATE;
 
-UPDATE mahasiswa SET tanggal_lahir='2002-10-22' WHERE nim="00001";
-UPDATE mahasiswa SET tanggal_lahir='2001-11-02' WHERE nim="00002";
+UPDATE mahasiswa SET tanggal_lahir='2004-10-22' WHERE nim="00001";
+UPDATE mahasiswa SET tanggal_lahir='2005-11-02' WHERE nim="00002";
 UPDATE mahasiswa SET tanggal_lahir='2000-02-02' WHERE nim="00003";
 UPDATE mahasiswa SET tanggal_lahir='2001-04-28' WHERE nim="00004";
 UPDATE mahasiswa SET tanggal_lahir='2002-10-22' WHERE nim="00001";
+
+SELECT nim, nama
+FROM mahasiswa
+WHERE strftime('%Y', 'now') - strftime('%Y', tanggal_lahir) < 20;
 
 SELECT DISTINCT khs.nim
 FROM khs
