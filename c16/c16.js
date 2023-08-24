@@ -17,18 +17,6 @@ class Car {
     }
 }
 
-class Agya {
-    constructor(brand, size, varian, door, seat, warranty, year, sn) {
-        this.car = new Car(brand, size, varian, door, seat, warranty, year, sn);
-    }
-}
-
-class Rush {
-    constructor(brand, size, varian, door, seat, warranty, year, sn) {
-        this.car = new Car(brand, size, varian, door, seat, warranty, year, sn);
-    }
-}
-
 class CarFactory {
     constructor() {
         this.cars = [];
@@ -36,13 +24,13 @@ class CarFactory {
 
     produceAgya(year) {
         for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
-            this.cars.push(new Agya('Dunlop', 15, 'Agya', 5, 5, 1, year, CarFactory.serialNumber()));
+            this.cars.push(new Car('Dunlop', 15, 'Agya', 5, 5, 1, year, CarFactory.serialNumber()));
         }
     }
 
     produceRush(year) {
         for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
-            this.cars.push(new Rush('Bridgestone', 17, 'Rush', 5, 5, 3, year, CarFactory.serialNumber()));
+            this.cars.push(new Car('Bridgestone', 17, 'Rush', 5, 5, 3, year, CarFactory.serialNumber()));
         }
     }
 
@@ -66,7 +54,7 @@ class CarFactory {
         let count = 1;
         for (let car of this.cars) {
             this.printCarDetails(car, count);
-            if (car.car.year + car.car.warranty >= simulationYear) {
+            if (car.year + car.warranty >= simulationYear) {
                 console.log(`Status on ${simulationYear} this guarantee status active`);
             } else {
                 console.log(`Status on ${simulationYear} this guarantee status expired`);
@@ -94,13 +82,13 @@ class CarFactory {
         console.log(
             `
 no. ${count}
-varian      : ${car.car.varian}
-sn          : ${car.car.sn}
-door        : ${car.car.door}
-seat        : ${car.car.seat} seater
-tyre        : ${car.car.tyre.brand} ${car.car.tyre.size} inch
-year        : ${car.car.year}
-warranty    : ${car.car.warranty} year
+varian      : ${car.varian}
+sn          : ${car.sn}
+door        : ${car.door}
+seat        : ${car.seat} seater
+tyre        : ${car.tyre.brand} ${car.tyre.size} inch
+year        : ${car.year}
+warranty    : ${car.warranty} year
 `
         );
     }
