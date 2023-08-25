@@ -17,6 +17,10 @@ class Car {
     }
 }
 
+class Agya extends Car {}
+
+class Rush extends Car {}
+
 class CarFactory {
     constructor() {
         this.cars = [];
@@ -24,13 +28,13 @@ class CarFactory {
 
     produceAgya(year) {
         for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
-            this.cars.push(new Car('Dunlop', 15, 'Agya', 5, 5, 1, year, CarFactory.serialNumber()));
+            this.cars.push(new Agya('Dunlop', 15, 'Agya', 5, 5, 1, year, CarFactory.serialNumber()));
         }
     }
 
     produceRush(year) {
         for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
-            this.cars.push(new Car('Bridgestone', 17, 'Rush', 5, 5, 3, year, CarFactory.serialNumber()));
+            this.cars.push(new Rush('Bridgestone', 17, 'Rush', 5, 5, 3, year, CarFactory.serialNumber()));
         }
     }
 
