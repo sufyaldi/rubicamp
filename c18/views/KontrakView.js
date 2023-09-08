@@ -20,6 +20,7 @@ export function listKontrak(array) {
         head: ['ID', 'Nim', 'Nama', 'Mata Kuliah', 'Dosen', 'Nilai']
     });
     array.forEach(item => {
+        const nama = item.nama || ''; // Mengatasi nilai null dengan string kosong
         table.push([item.id_kontrak, item.nim, item.nama, item.matkul, item.dosen, item.nilai])
     });
     console.log(table.toString())

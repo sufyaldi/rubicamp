@@ -15,6 +15,7 @@ silahkan pilih opsi di bawah ini
 };
 
 export function listMatakuliah(array) {
+    array.sort((a, b) => a.id_matkul.localeCompare(b.id_matkul));
     let table = new Table({
         head: ['Kode Mata Kuliah', 'Nama Mata Kuliah', 'SKS']
     });

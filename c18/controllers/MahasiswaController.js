@@ -1,14 +1,14 @@
 import Mahasiswa from "../models/Mahasiswa.js";
 import Kontrak from '../models/Kontrak.js';
 import { option, listMahasiswa, findResult } from "../views/MahasiswaView.js";
-import { rl } from "../Connector.js"; // Ensure that rl is correctly imported from Connector.js
+import { rl } from "../Connector.js"; 
 import { listJurusan } from "../views/JurusanView.js";
 import Jurusan from "../models/Jurusan.js";
 import { home } from "../c18.js";
 
 export default class MahasiswaController {
     static option() {
-        option(); // Ensure that the option function is defined in MahasiswaView.js
+        option(); 
         rl.question("Masukkan salah satu nomor dari opsi di atas : ", (index) => {
             switch (index) {
                 case "1":
@@ -24,7 +24,7 @@ export default class MahasiswaController {
                     MahasiswaController.delete();
                     break;
                 case "5":
-                    home(); // Ensure that home() function is correctly defined in c18.js
+                    home();
                     break;
                 default:
                     console.log(
@@ -38,7 +38,7 @@ export default class MahasiswaController {
     static listOf() {
         Mahasiswa.list()
             .then((data) => {
-                listMahasiswa(data); // Ensure that listMahasiswa is defined in MahasiswaView.js
+                listMahasiswa(data); 
                 MahasiswaController.option();
             })
             .catch(() => {
@@ -53,7 +53,7 @@ export default class MahasiswaController {
         rl.question("Masukkan NIM Mahasiswa : ", (nim) => {
             Mahasiswa.find(nim)
                 .then((data) => {
-                    findResult(data); // Ensure that findResult is defined in MahasiswaView.js
+                    findResult(data); 
                     MahasiswaController.option();
                 })
                 .catch(() => {
@@ -116,7 +116,7 @@ export default class MahasiswaController {
                 MahasiswaController.option();
             });
     }
-
+   
     static async delete() {
         const mahasiswaList = await Mahasiswa.list();
         if (mahasiswaList) {
@@ -126,10 +126,14 @@ export default class MahasiswaController {
                 async (nim) => {
                     const mahasiswa = await Mahasiswa.find(nim);
                     if (mahasiswa) {
-                        // Periksa apakah Mahasiswa memiliki data terkait di tabel Kontrak
-                        // There is a missing import for Kontrak, make sure to import it
+                        // Cek mahasiswa di tabel Kontrak
                         const kontrakData = await Kontrak.find(nim);
                         if (kontrakData && kontrakData.length > 0) {
+                            console.log(
+                                `Mahasiswa dengan NIM ${nim} memiliki data di tabel Kontrak. Tidak dapat dihapus.`
+                            );
+                            MahasiswaController.option();
+                        } else {
                             console.log(`Data Mahasiswa ${mahasiswa.nim}, akan dihapus`);
                             rl.question(
                                 "Apakah Anda yakin? (ya/tidak): ",
@@ -146,17 +150,19 @@ export default class MahasiswaController {
                                             );
                                         }
                                     } else {
-                                        console.log(`Data Mahasiswa ${mahasiswa.nim}, tidak dihapus`);
+                                        console.log(
+                                            `Data Mahasiswa ${mahasiswa.nim}, tidak dihapus`
+                                        );
                                     }
                                     MahasiswaController.option();
                                 }
                             );
-                        } else {
-                            console.log(
-                                `Gagal menghapus data Mahasiswa.\nMahasiswa dengan NIM ${nim}, tidak terdaftar`
-                            );
-                            MahasiswaController.option();
                         }
+                    } else {
+                        console.log(
+                            `Mahasiswa dengan NIM ${nim}, tidak terdaftar`
+                        );
+                        MahasiswaController.option();
                     }
                 }
             );
@@ -167,4 +173,5 @@ export default class MahasiswaController {
             MahasiswaController.option();
         }
     }
+    
 }

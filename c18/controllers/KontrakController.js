@@ -73,41 +73,86 @@ export default class KontrakController {
     };
 
     static async add() {
-        console.log("Lengkapi data di bawah ini :")
-        const mahasiswa = await Mahasiswa.list()
+        console.log("Lengkapi data di bawah ini :");
+        const mahasiswa = await Mahasiswa.list();
         if (mahasiswa) {
-            listMahasiswa(mahasiswa)
+            listMahasiswa(mahasiswa);
             rl.question("Masukkan NIM Mahasiswa : ", async (nim) => {
-                const matkul = await Matakuliah.list(nim)
-                if (matkul) {
-                    listMatakuliah(matkul);
-                    rl.question("Masukkan Kode Mata Kuliah : ", async (kode) => {
-                        const dosen = await Dosen.list();
-                        if (dosen) {
-                            listDosen(dosen);
-                            rl.question("Masukkan NIP Dosen : ", async (nip) => {
-                                if (await Kontrak.findForAdd(nim, kode)) {
-                                    console.log("Gagal menambahkan kontrak. Kontrak telah terdaftar");
-                                    KontrakController.option()
-                                } else {
-                                    Kontrak.add(nim, kode, nip);
-                                    console.log("Kontrak telah ditambahkan ke database");
-                                    KontrakController.listOf();
-                                    KontrakController.option();
-                                }
-                            })
-                        } else {
-                            console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi")
-                            DosenController.option()
-                        }
-                    });
+                // Cek Apakah Mahasiswa terdaftar di tabel Mahasiswa
+                const cekMahasiswa = await Mahasiswa.find(nim);
+                if (cekMahasiswa) {
+                    const matkul = await Matakuliah.list(nim);
+                    if (matkul) {
+                        listMatakuliah(matkul);
+                        rl.question("Masukkan Kode Mata Kuliah : ", async (kode) => {
+                            const dosen = await Dosen.list();
+                            if (dosen) {
+                                listDosen(dosen);
+                                rl.question("Masukkan NIP Dosen : ", async (nip) => {
+                                    if (await Kontrak.findForAdd(nim, kode)) {
+                                        console.log("Gagal menambahkan kontrak. Kontrak telah terdaftar");
+                                        KontrakController.option();
+                                    } else {
+                                        Kontrak.add(nim, kode, nip);
+                                        console.log("Kontrak telah ditambahkan ke database");
+                                        KontrakController.listOf();
+                                        KontrakController.option();
+                                    }
+                                });
+                            } else {
+                                console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi");
+                                DosenController.option();
+                            }
+                        });
+                    }
+                } else {
+                    console.log(`Mahasiswa dengan NIM ${nim} tidak terdaftar.Coba lagi !`);
+                    KontrakController.option();
                 }
             });
         } else {
-            console.log("Terjadi kesalahan dalam menampilkan data.Silahkan coba lagi");
+            console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi");
             KontrakController.option();
         }
-    };
+    }
+    
+
+    // static async add() {
+    //     console.log("Lengkapi data di bawah ini :")
+    //     const mahasiswa = await Mahasiswa.list()
+    //     if (mahasiswa) {
+    //         listMahasiswa(mahasiswa)
+    //         rl.question("Masukkan NIM Mahasiswa : ", async (nim) => {
+    //             const matkul = await Matakuliah.list(nim)
+    //             if (matkul) {
+    //                 listMatakuliah(matkul);
+    //                 rl.question("Masukkan Kode Mata Kuliah : ", async (kode) => {
+    //                     const dosen = await Dosen.list();
+    //                     if (dosen) {
+    //                         listDosen(dosen);
+    //                         rl.question("Masukkan NIP Dosen : ", async (nip) => {
+    //                             if (await Kontrak.findForAdd(nim, kode)) {
+    //                                 console.log("Gagal menambahkan kontrak. Kontrak telah terdaftar");
+    //                                 KontrakController.option()
+    //                             } else {
+    //                                 Kontrak.add(nim, kode, nip);
+    //                                 console.log("Kontrak telah ditambahkan ke database");
+    //                                 KontrakController.listOf();
+    //                                 KontrakController.option();
+    //                             }
+    //                         })
+    //                     } else {
+    //                         console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi")
+    //                         DosenController.option()
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //     } else {
+    //         console.log("Terjadi kesalahan dalam menampilkan data.Silahkan coba lagi");
+    //         KontrakController.option();
+    //     }
+    // };
 
     static delete() {
         rl.question("Masukkan ID Kontrak : ", async (id) => {

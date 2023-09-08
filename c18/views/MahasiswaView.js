@@ -16,6 +16,7 @@ export function option() {
 }
 
 export function listMahasiswa(array) {
+  array.sort((a, b) => a.nim.localeCompare(b.nim));
   const table = new Table({
     head: ['Nim', 'Nama', 'Tanggal Lahir', 'Alamat', 'Kode Jurusan', 'Nama Jurusan'],
   });
