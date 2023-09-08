@@ -6,6 +6,40 @@ export default class Kontrak {
         this.nip = obj.nip
     };
 
+    static findByMatakuliah(id_matkul) {
+        return new Promise((resolve, reject) => {
+            db.all(
+                'SELECT * FROM kontrak WHERE id_matkul = ?',
+                [id_matkul],
+                (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                }
+            );
+        });
+    }
+
+    static findByNIP(nip) {
+        return new Promise((resolve, reject) => {
+            db.all(
+                'SELECT * FROM kontrak WHERE nip = ?',
+                [nip],
+                (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                }
+            );
+        });
+    }
+
     save() {
         db.run("INSERT INTO kontrak (nim , id_matkul, nip) VALUES (?, ?, ?)",
             [this.nim, this.id_matkul, this.nip], (err, data) => {

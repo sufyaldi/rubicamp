@@ -116,44 +116,6 @@ export default class KontrakController {
         }
     }
     
-
-    // static async add() {
-    //     console.log("Lengkapi data di bawah ini :")
-    //     const mahasiswa = await Mahasiswa.list()
-    //     if (mahasiswa) {
-    //         listMahasiswa(mahasiswa)
-    //         rl.question("Masukkan NIM Mahasiswa : ", async (nim) => {
-    //             const matkul = await Matakuliah.list(nim)
-    //             if (matkul) {
-    //                 listMatakuliah(matkul);
-    //                 rl.question("Masukkan Kode Mata Kuliah : ", async (kode) => {
-    //                     const dosen = await Dosen.list();
-    //                     if (dosen) {
-    //                         listDosen(dosen);
-    //                         rl.question("Masukkan NIP Dosen : ", async (nip) => {
-    //                             if (await Kontrak.findForAdd(nim, kode)) {
-    //                                 console.log("Gagal menambahkan kontrak. Kontrak telah terdaftar");
-    //                                 KontrakController.option()
-    //                             } else {
-    //                                 Kontrak.add(nim, kode, nip);
-    //                                 console.log("Kontrak telah ditambahkan ke database");
-    //                                 KontrakController.listOf();
-    //                                 KontrakController.option();
-    //                             }
-    //                         })
-    //                     } else {
-    //                         console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi")
-    //                         DosenController.option()
-    //                     }
-    //                 });
-    //             }
-    //         });
-    //     } else {
-    //         console.log("Terjadi kesalahan dalam menampilkan data.Silahkan coba lagi");
-    //         KontrakController.option();
-    //     }
-    // };
-
     static delete() {
         rl.question("Masukkan ID Kontrak : ", async (id) => {
             const kontrak = await Kontrak.findForDelete(id)

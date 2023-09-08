@@ -35,6 +35,8 @@ export default class MahasiswaController {
         });
     }
 
+    
+
     static listOf() {
         Mahasiswa.list()
             .then((data) => {
@@ -126,7 +128,7 @@ export default class MahasiswaController {
                 async (nim) => {
                     const mahasiswa = await Mahasiswa.find(nim);
                     if (mahasiswa) {
-                        // Cek mahasiswa di tabel Kontrak
+                        // Cek data mahasiswa di tabel Kontrak
                         const kontrakData = await Kontrak.find(nim);
                         if (kontrakData && kontrakData.length > 0) {
                             console.log(

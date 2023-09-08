@@ -1,7 +1,8 @@
 import { rl } from "../Connector.js";
 import { home } from "../c18.js";
-import { option, listDosen, findResult } from "../views/DosenViews.js";
+import { option, listDosen } from "../views/DosenViews.js";
 import Dosen from "../models/Dosen.js";
+import Kontrak from "../models/Kontrak.js"; // Import model Kontrak
 
 export default class DosenController {
     static option() {
@@ -45,7 +46,9 @@ export default class DosenController {
         rl.question("Masukkan NIP Dosen : ", async (nip) => {
             const dosen = await Dosen.find(nip);
             if (dosen) {
-                findResult(dosen);
+                // Tampilkan informasi dosen
+                console.log(`Informasi Dosen dengan NIP ${nip}`);
+                console.log(dosen);
                 DosenController.option();
             } else {
                 console.log(`Dosen dengan NIP ${nip}, tidak terdaftar`);
@@ -59,10 +62,10 @@ export default class DosenController {
         const dosen = await Dosen.list();
         if (dosen) {
             listDosen(dosen);
-            rl.question("NIP Dosen : ", (nip) => {
+            rl.question("NIP Dosen : ", async (nip) => {
                 rl.question("Nama Dosen : ", async (nama) => {
                     if (await Dosen.find(nip)) {
-                        console.log("\nGagal menambhakan Dosen. NIP Dosen telah terdaftar");
+                        console.log("\nGagal menambahkan Dosen. NIP Dosen telah terdaftar");
                         DosenController.option()
                     } else {
                         Dosen.add(nip, nama);
@@ -85,16 +88,25 @@ export default class DosenController {
             rl.question("Masukkan NIP Dosen yang ingin dihapus: ", async (nip) => {
                 const dosen = await Dosen.find(nip);
                 if (dosen) {
-                    console.log(`Data Dosen ${dosen.nip}, akan dihapus`);
-                    rl.question("Apakah Anda yakin? (yes/no): ", async (confirmation) => {
-                        if (confirmation.toLowerCase() === 'yes') {
-                            await Dosen.delete(dosen.nip);
-                            console.log(`Data Dosen ${dosen.nip}, telah dihapus`);
-                        } else {
-                            console.log(`Data Dosen ${dosen.nip}, tidak dihapus`);
-                        }
+                    // Cek data dosen di tabel Kontrak
+                    const kontrakData = await Kontrak.findByNIP(nip); // Gunakan findByNIP dari model Kontrak
+                    if (!kontrakData || kontrakData.length === 0) { 
+                        console.log(`Data Dosen ${dosen.nip}, akan dihapus`);
+                        rl.question("Apakah Anda yakin? (yes/no): ", async (confirmation) => {
+                            if (confirmation.toLowerCase() === 'yes') {
+                                await Dosen.delete(dosen.nip);
+                                console.log(`Data Dosen ${dosen.nip}, telah dihapus`);
+                            } else {
+                                console.log(`Data Dosen ${dosen.nip}, tidak dihapus`);
+                            }
+                            DosenController.option();
+                        });
+                    } else {
+                        console.log(
+                            `Dosen dengan NIP ${nip} memiliki data di tabel Kontrak. Tidak dapat dihapus.`
+                        );
                         DosenController.option();
-                    });
+                    }
                 } else {
                     console.log("Gagal menghapus data Dosen. NIP Dosen tidak terdaftar");
                     DosenController.option();
@@ -104,5 +116,5 @@ export default class DosenController {
             console.log("Terjadi kesalahan dalam menampilkan data. Silahkan coba lagi");
             DosenController.option();
         }
-    }    
+    }
 }

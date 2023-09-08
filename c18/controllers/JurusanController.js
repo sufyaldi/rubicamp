@@ -2,6 +2,7 @@ import { rl } from "../Connector.js";
 import Jurusan from "../models/Jurusan.js";
 import { option, listJurusan, findResult } from "../views/JurusanView.js";
 import { home } from "../c18.js";
+import Mahasiswa from "../models/Mahasiswa.js";
 
 export default class JurusanController {
     static option() {
@@ -79,18 +80,34 @@ export default class JurusanController {
         }
     };
 
-    static delete() {
+    static async delete() {
         rl.question("Masukkan Kode Jurusan : ", async (kode) => {
-            const jurusan = await Jurusan.find(kode)
+            const jurusan = await Jurusan.find(kode);
             if (jurusan) {
-                console.log(`Data Jurusan ${jurusan.id_jurusan}, telah dihapus`);
-                await Jurusan.delete(jurusan.id_jurusan),
+                // Check if there are students (Mahasiswa) associated with this Jurusan
+                const mahasiswaList = await Mahasiswa.findByJurusan(jurusan.id_jurusan);
+
+                if (mahasiswaList && mahasiswaList.length > 0) {
+                    console.log(
+                        `Jurusan tidak dapat dihapus. Sudah ada Mahasiswa yang terdaftar pada Jurusan dengan Kode ${kode}.`
+                    );
                     JurusanController.option();
+                } else {
+                    try {
+
+                        await Jurusan.delete(jurusan.id_jurusan);
+                        console.log(`Data Jurusan ${kode}, telah dihapus`);
+                    } catch (error) {
+                        console.log(
+                            "Gagal menghapus data Jurusan. Terjadi kesalahan dalam menghapus data"
+                        );
+                    }
+                    JurusanController.option();
+                }
             } else {
-                console.log("Gagal menghapus data Jurusan. Kode Jurusan tidak terdaftar");
+                console.log("Kode Jurusan tidak terdaftar");
                 JurusanController.option();
             }
-        })
-
+        });
     }
 }
